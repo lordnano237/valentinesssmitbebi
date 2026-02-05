@@ -1,607 +1,714 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>💘</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>💘</title>
 
-<style>
-:root{
---bg1:#ffe3ec; /* pink start */
---bg2:#fff0f6;
---text:#2b2b2b;
-}
+  <style>
+    :root{
+      --bg1:#ffe3ec; /* pink start */
+      --bg2:#fff0f6;
+      --text:#2b2b2b;
+    }
 
-body{
-margin:0;
-font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-background: radial-gradient(circle at top, var(--bg1), var(--bg2));
-color: var(--text);
-min-height:100vh;
-display:grid;
-place-items:center;
-transition: background 0.35s ease;
-overflow-x:hidden;
-}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+      color: var(--text);
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      transition: background 0.35s ease;
+      overflow-x:hidden;
+    }
 
-.card{
-background: rgba(255,255,255,0.86); /* bleibt hell => Schrift sichtbar */
-backdrop-filter: blur(10px);
-border: 1px solid rgba(255, 105, 180, 0.25);
-border-radius: 18px;
-padding: 28px 22px;
-width: min(520px, 92vw);
-text-align: center;
-box-shadow: 0 12px 40px rgba(255, 20, 147, 0.15);
-position: relative;
-z-index: 6;
-}
+    .card{
+      background: rgba(255,255,255,0.86); /* bleibt hell => Schrift sichtbar */
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 105, 180, 0.25);
+      border-radius: 18px;
+      padding: 28px 22px;
+      width: min(520px, 92vw);
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(255, 20, 147, 0.15);
+      position: relative;
+      z-index: 6;
+    }
 
-h1 { margin: 0 0 10px; font-size: clamp(26px, 4vw, 38px); }
-p { margin: 0 0 18px; opacity: 0.9; }
+    h1 { margin: 0 0 10px; font-size: clamp(26px, 4vw, 38px); }
+    p  { margin: 0 0 18px; opacity: 0.9; }
 
-.buttons{
-display:flex;
-gap:12px;
-justify-content:center;
-align-items:center;
-flex-wrap:wrap;
-margin-top:8px;
-}
+    .buttons{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
 
-button{
-border:none;
-border-radius:999px;
-padding:12px 18px;
-cursor:pointer;
-font-weight:700;
-transition: transform 0.12s ease, filter 0.12s ease;
-user-select:none;
-position: relative;
-z-index: 3;
-}
-button:active{ transform: translateY(1px) scale(0.99); }
+    button{
+      border:none;
+      border-radius:999px;
+      padding:12px 18px;
+      cursor:pointer;
+      font-weight:700;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      user-select:none;
+      position: relative;
+      z-index: 3;
+    }
+    button:active{ transform: translateY(1px) scale(0.99); }
 
-/* YES + Pfeile */
-.yesWrap{
-position: relative;
-display: inline-block;
-}
+    /* YES + Pfeile */
+    .yesWrap{
+      position: relative;
+      display: inline-block;
+      transform-origin: center;
+    }
 
-#yesBtn{
-background: linear-gradient(135deg, #ff4d8d, #ff7ab6);
-color:white;
-font-size:18px;
-box-shadow: 0 10px 24px rgba(255, 77, 141, 0.35);
-transform-origin:center;
-}
+    #yesBtn{
+      background: linear-gradient(135deg, #ff4d8d, #ff7ab6);
+      color:white;
+      font-size:18px;
+      box-shadow: 0 10px 24px rgba(255, 77, 141, 0.35);
+      transform-origin:center;
+    }
 
-/* Pfeile-Layer */
-.arrows{
-position:absolute;
-inset:-32px;
-pointer-events:none;
-opacity:0;
-transform: scale(0.98);
-transition: opacity 0.25s ease, transform 0.25s ease;
-z-index: 4;
-}
-.arrows.show{ opacity:1; transform: scale(1); }
+    /* Pfeile-Layer */
+    .arrows{
+      position:absolute;
+      inset:-32px;
+      pointer-events:none;
+      opacity:0;
+      transform: scale(0.98);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 4;
+    }
+    .arrows.show{ opacity:1; transform: scale(1); }
 
-.arrow{
-position:absolute;
-font-size: 30px;
-filter: drop-shadow(0 8px 14px rgba(0,0,0,0.25));
-display:none;
-}
-.arrow span{
-display:inline-block;
-color: #ff1a1a;
-font-weight: 900;
-}
+    .arrow{
+      position:absolute;
+      font-size: 30px;
+      filter: drop-shadow(0 8px 14px rgba(0,0,0,0.25));
+      display:none;
+    }
+    .arrow span{
+      display:inline-block;
+      color: #ff1a1a;
+      font-weight: 900;
+    }
 
-.a1{ left:-12px; top:50%; transform: translateY(-50%) rotate(0deg); }
-.a2{ right:-12px; top:50%; transform: translateY(-50%) rotate(180deg); }
-.a3{ left:50%; top:-8px; transform: translateX(-50%) rotate(90deg); }
-.a4{ left:50%; bottom:-8px; transform: translateX(-50%) rotate(-90deg); }
-.a5{ left:8%; top:10%; transform: rotate(35deg); }
-.a6{ right:8%; top:10%; transform: rotate(145deg); }
+    .a1{ left:-12px; top:50%; transform: translateY(-50%) rotate(0deg); }
+    .a2{ right:-12px; top:50%; transform: translateY(-50%) rotate(180deg); }
+    .a3{ left:50%; top:-8px; transform: translateX(-50%) rotate(90deg); }
+    .a4{ left:50%; bottom:-8px; transform: translateX(-50%) rotate(-90deg); }
+    .a5{ left:8%; top:10%; transform: rotate(35deg); }
+    .a6{ right:8%; top:10%; transform: rotate(145deg); }
 
-#noBtn{
-background:#ffffff;
-color:#ff2f78;
-border:2px solid rgba(255, 47, 120, 0.35);
-font-size:16px;
-}
+    #noBtn{
+      background:#ffffff;
+      color:#ff2f78;
+      border:2px solid rgba(255, 47, 120, 0.35);
+      font-size:16px;
+    }
 
-/* ==================== GEWITTER OVERLAY ==================== */
-#storm{
-position:fixed;
-inset:0;
-pointer-events:none;
-display:none;
-z-index: 20;
-overflow:hidden;
-background: radial-gradient(circle at top, rgba(40,0,60,0.25), rgba(0,0,0,0.55));
-}
-#storm.show{ display:block; }
+    /* ==================== GEWITTER OVERLAY ==================== */
+    #storm{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      display:none;
+      z-index: 20;
+      overflow:hidden;
+      background: radial-gradient(circle at top, rgba(40,0,60,0.25), rgba(0,0,0,0.55));
+    }
+    #storm.show{ display:block; }
 
-.rainDrop{
-position:absolute;
-top:-40px;
-width:2px;
-height:30px;
-background: rgba(180, 220, 255, 0.55);
-transform: skewX(-20deg);
-animation: rain linear infinite;
-}
-@keyframes rain{
-to { transform: translateY(115vh) skewX(-20deg); }
-}
+    .rainDrop{
+      position:absolute;
+      top:-40px;
+      width:2px;
+      height:30px;
+      background: rgba(180, 220, 255, 0.55);
+      transform: skewX(-20deg);
+      animation: rain linear infinite;
+    }
+    @keyframes rain{
+      to { transform: translateY(115vh) skewX(-20deg); }
+    }
 
-#lightning{
-position:absolute;
-inset:0;
-background: rgba(255,255,255,0.0);
-animation: lightning 4.0s infinite;
-}
-@keyframes lightning{
-0%, 86%, 100% { background: rgba(255,255,255,0.0); }
-87% { background: rgba(255,255,255,0.33); }
-88% { background: rgba(255,255,255,0.0); }
-90% { background: rgba(255,255,255,0.22); }
-91% { background: rgba(255,255,255,0.0); }
-}
+    #lightning{
+      position:absolute;
+      inset:0;
+      background: rgba(255,255,255,0.0);
+      animation: lightning 4.0s infinite;
+    }
+    @keyframes lightning{
+      0%, 86%, 100% { background: rgba(255,255,255,0.0); }
+      87% { background: rgba(255,255,255,0.33); }
+      88% { background: rgba(255,255,255,0.0); }
+      90% { background: rgba(255,255,255,0.22); }
+      91% { background: rgba(255,255,255,0.0); }
+    }
 
-/* ==================== CELEBRATE OVERLAY ==================== */
-#celebrate{
-position:fixed;
-inset:0;
-display:none;
-place-items:center;
-z-index:50;
-overflow:hidden;
-background: radial-gradient(circle at top, rgba(255,255,255,0.55), rgba(255, 192, 203, 0.35));
-}
+    /* ==================== IMPACT (letztes NEIN) ==================== */
+    #impact{
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      display: none;
+      z-index: 40; /* über Gewitter, unter Celebrate */
+      overflow: hidden;
+    }
+    #impact.show{ display:block; }
 
-/* Canvas Feuerwerk hinter allem */
-#fireworks{
-position:absolute;
-inset:0;
-width:100%;
-height:100%;
-z-index: 1;
-}
+    #impactFlash{
+      position:absolute;
+      inset:0;
+      background: rgba(255,255,255,0);
+    }
 
-/* Vögel vor Feuerwerk, hinter Karte */
-#birds{
-position:absolute;
-inset:0;
-z-index: 2;
-pointer-events:none;
-}
+    #rocket{
+      position:absolute;
+      left: 50%;
+      top: -25vh;
+      transform: translateX(-50%) rotate(20deg);
+      font-size: clamp(48px, 7vw, 96px);
+      filter: drop-shadow(0 16px 28px rgba(0,0,0,0.35));
+    }
 
-.celebrate-card{
-background: rgba(255,255,255,0.88);
-border-radius:22px;
-padding:26px 22px;
-text-align:center;
-border:1px solid rgba(255,105,180,0.25);
-box-shadow: 0 18px 60px rgba(255, 20, 147, 0.2);
-width:min(560px, 92vw);
-position: relative;
-z-index: 3;
-}
+    #blast{
+      position:absolute;
+      left:50%;
+      top:60%;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      transform: translate(-50%,-50%);
+      background: rgba(255, 180, 0, 0.0);
+    }
 
-.big { font-size: clamp(34px, 5vw, 56px); margin: 0 0 8px; }
-.sub { font-size: 18px; margin: 0; }
+    @keyframes rocketIn {
+      0%   { top: -25vh; transform: translateX(-50%) rotate(20deg) scale(1); }
+      65%  { top: 58%;   transform: translateX(-50%) rotate(20deg) scale(1); }
+      100% { top: 60%;   transform: translateX(-50%) rotate(20deg) scale(0.9); }
+    }
 
-/* Konfetti über allem */
-.confetti{
-position:absolute;
-width:10px; height:14px;
-opacity:0.9;
-top:-20px;
-animation: fall linear forwards;
-border-radius:3px;
-z-index: 4;
-}
-@keyframes fall{ to { transform: translateY(110vh) rotate(720deg); } }
+    @keyframes blastRing {
+      0%   { width: 8px; height: 8px; opacity: 0.0; box-shadow: 0 0 0 rgba(255,180,0,0); }
+      10%  { opacity: 1; background: rgba(255,180,0,0.55); }
+      100% { width: 180vmax; height: 180vmax; opacity: 0; background: rgba(255,80,0,0.0); }
+    }
 
-/* Paradiesvögel */
-.bird{
-position:absolute;
-font-size: clamp(30px, 4.4vw, 60px);
-filter: drop-shadow(0 10px 18px rgba(0,0,0,0.25));
-will-change: transform;
-opacity: 0.95;
-}
+    @keyframes flash {
+      0%   { background: rgba(255,255,255,0); }
+      12%  { background: rgba(255,255,255,0.92); }
+      28%  { background: rgba(255,255,255,0.0); }
+      55%  { background: rgba(255,210,210,0.10); }
+      100% { background: rgba(255,255,255,0); }
+    }
 
-@keyframes flyLR{
-from { transform: translateX(-25vw) translateY(var(--y)) scale(var(--s)) rotate(var(--r)); }
-to { transform: translateX(125vw) translateY(var(--y)) scale(var(--s)) rotate(var(--r)); }
-}
-@keyframes flyRL{
-from { transform: translateX(125vw) translateY(var(--y)) scale(var(--s)) rotate(var(--r)); }
-to { transform: translateX(-25vw) translateY(var(--y)) scale(var(--s)) rotate(var(--r)); }
-}
-</style>
+    @keyframes shake {
+      0% { transform: translate(0,0); }
+      15% { transform: translate(-8px, 6px); }
+      30% { transform: translate(7px, -5px); }
+      45% { transform: translate(-6px, -3px); }
+      60% { transform: translate(6px, 5px); }
+      75% { transform: translate(-4px, 2px); }
+      100% { transform: translate(0,0); }
+    }
+
+    body.shake{
+      animation: shake 0.55s ease;
+    }
+
+    /* ===== YES "GLOW + HERZSCHLAG" (nach Impact) ===== */
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      12%      { transform: scale(1.06); }
+      24%      { transform: scale(0.98); }
+      40%      { transform: scale(1.10); }
+      60%      { transform: scale(1.00); }
+    }
+
+    .yesWrap.pulse{
+      animation: heartbeat 0.85s ease-in-out infinite;
+    }
+
+    .yesWrap.pulse #yesBtn{
+      box-shadow:
+        0 0 0 6px rgba(255, 0, 90, 0.18),
+        0 0 30px rgba(255, 0, 90, 0.40),
+        0 14px 28px rgba(255, 0, 90, 0.25);
+      filter: saturate(1.25) brightness(1.05);
+    }
+
+    /* ==================== CELEBRATE OVERLAY ==================== */
+    #celebrate{
+      position:fixed;
+      inset:0;
+      display:none;
+      place-items:center;
+      z-index:50;
+      overflow:hidden;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.55), rgba(255, 192, 203, 0.35));
+    }
+
+    #fireworks{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index: 1;
+    }
+
+    #birds{
+      position:absolute;
+      inset:0;
+      z-index: 2;
+      pointer-events:none;
+    }
+
+    .celebrate-card{
+      background: rgba(255,255,255,0.88);
+      border-radius:22px;
+      padding:26px 22px;
+      text-align:center;
+      border:1px solid rgba(255,105,180,0.25);
+      box-shadow: 0 18px 60px rgba(255, 20, 147, 0.2);
+      width:min(560px, 92vw);
+      position: relative;
+      z-index: 3;
+    }
+
+    .big { font-size: clamp(34px, 5vw, 56px); margin: 0 0 8px; }
+    .sub { font-size: 18px; margin: 0; }
+
+    .confetti{
+      position:absolute;
+      width:10px; height:14px;
+      opacity:0.9;
+      top:-20px;
+      animation: fall linear forwards;
+      border-radius:3px;
+      z-index: 4;
+    }
+    @keyframes fall{ to { transform: translateY(110vh) rotate(720deg); } }
+
+    .bird{
+      position:absolute;
+      font-size: clamp(30px, 4.4vw, 60px);
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.25));
+      will-change: transform;
+      opacity: 0.95;
+    }
+
+    @keyframes flyLR{
+      from { transform: translateX(-25vw) translateY(var(--y)) scale(var(--s)) rotate(var(--r)); }
+      to   { transform: translateX(125vw) translateY(var(--y)) scale(var(--s)) rotate(var(--r)); }
+    }
+    @keyframes flyRL{
+      from { transform: translateX(125vw) translateY(var(--y)) scale(var(--s)) rotate(var(--r)); }
+      to   { transform: translateX(-25vw) translateY(var(--y)) scale(var(--s)) rotate(var(--r)); }
+    }
+  </style>
 </head>
 
 <body>
-<div class="card" id="main">
-<h1>💘 Do u wanna be my Valentineee beeeebbiiiii 😎🦀🦜🐣🐣🐣👁️👁️</h1>
-<p>(Die Antwort ist gaaaaaanz einfach bubu 😎😄)</p>
-
-<div class="buttons">
-<div class="yesWrap">
-<button id="yesBtn">YES 😎🐒💘</button>
-
-<div class="arrows" id="arrows">
-<div class="arrow a1"><span>➤</span></div>
-<div class="arrow a2"><span>➤</span></div>
-<div class="arrow a3"><span>➤</span></div>
-<div class="arrow a4"><span>➤</span></div>
-<div class="arrow a5"><span>➤</span></div>
-<div class="arrow a6"><span>➤</span></div>
-</div>
-</div>
-
-<button id="noBtn">ich bin eine bitch 😠👿🆘</button>
-</div>
-</div>
-
-<!-- Gewitter -->
-<div id="storm">
-<div id="lightning"></div>
-</div>
-
-<!-- Celebrate -->
-<div id="celebrate">
-<canvas id="fireworks"></canvas>
-<div id="birds"></div>
-
-<div class="celebrate-card">
-<p class="big">MUHEHEHEHE BEBBBBBEBEBEBI 😎🦜🐣💘</p>
-<p class="sub">ICH FREUE MICH AUF BERLIN MIT MEINEM BEBI 💘</p>
-<p class="sub" style="opacity:.85;margin-top:10px;">(MEINE KLEINE BEBIMAUS 🐱🐶)</p>
-</div>
-</div>
-
-<script>
-const yesBtn = document.getElementById('yesBtn');
-const noBtn = document.getElementById('noBtn');
-const celebrate = document.getElementById('celebrate');
-const arrows = document.getElementById('arrows');
-const storm = document.getElementById('storm');
-const birdsLayer = document.getElementById('birds');
-
-let noCount = 0;
-let yesScale = 1;
-
-// ===================== SOUNDS (liegen in /sounds/...) =====================
-const sounds = {
-applause: new Audio('sounds/applause.mp3'),
-yay: new Audio('sounds/yay.mp3'),
-fireworks: new Audio('sounds/fireworks.mp3'),
-rain: new Audio('sounds/rain.mp3'),
-thunder: new Audio('sounds/thunder.mp3')
-};
-
-// Lautstärken (feinfühlig)
-sounds.applause.volume = 0.65;
-sounds.yay.volume = 0.85;
-sounds.fireworks.volume = 0.35;
-sounds.rain.volume = 0.25;
-sounds.thunder.volume = 0.55;
-
-sounds.rain.loop = true;
-
-function safePlay(a){
-try {
-a.play().catch(()=>{});
-} catch(e){}
-}
-
-function safePause(a){
-try { a.pause(); } catch(e){}
-}
-
-// ===================== Mood (nur Hintergrund dunkler) =====================
-function lerp(a, b, t){ return a + (b - a) * t; }
-function mixColor(c1, c2, t){
-const r = Math.round(lerp(c1[0], c2[0], t));
-const g = Math.round(lerp(c1[1], c2[1], t));
-const b = Math.round(lerp(c1[2], c2[2], t));
-return `rgb(${r},${g},${b})`;
-}
-
-function updateMood(){
-const t = Math.min(1, noCount / 8);
-const bg1 = mixColor([255, 227, 236], [60, 10, 80], t);
-const bg2 = mixColor([255, 240, 246], [5, 0, 12], t);
-
-document.documentElement.style.setProperty('--bg1', bg1);
-document.documentElement.style.setProperty('--bg2', bg2);
-
-// Gewitter ab dem 3. Nein
-if (noCount >= 3) storm.classList.add('show');
-else storm.classList.remove('show');
-
-// Pfeile ab dem 3. Nein, werden mehr
-const arrowEls = arrows.querySelectorAll('.arrow');
-if (noCount >= 3) {
-arrows.classList.add('show');
-arrowEls.forEach((el, idx) => {
-el.style.display = (idx < Math.min(2 + noCount, arrowEls.length)) ? 'block' : 'none';
-});
-} else {
-arrows.classList.remove('show');
-arrowEls.forEach(el => el.style.display = 'none');
-}
-}
-
-// ===================== YES wächst =====================
-function updateYesSize(){
-yesBtn.style.transform = `scale(${yesScale})`;
-yesBtn.style.filter = `saturate(${1 + noCount * 0.15})`;
-}
-
-// ===================== Regen erzeugen (einmalig) =====================
-function buildRain(){
-if (storm.dataset.rainBuilt) return;
-storm.dataset.rainBuilt = "1";
-
-for(let i=0; i<95; i++){
-const d = document.createElement('div');
-d.className = 'rainDrop';
-d.style.left = (Math.random() * 100) + 'vw';
-d.style.opacity = (0.22 + Math.random() * 0.55);
-const dur = 0.55 + Math.random() * 0.95;
-d.style.animationDuration = dur + 's';
-d.style.animationDelay = (Math.random() * 1.2) + 's';
-storm.appendChild(d);
-}
-}
-
-// ===================== Konfetti =====================
-function launchConfetti(n = 180){
-for (let i = 0; i < n; i++) {
-const c = document.createElement('div');
-c.className = 'confetti';
-
-const left = Math.random() * 100;
-const size = 6 + Math.random() * 10;
-const duration = 2.2 + Math.random() * 2.8;
-
-c.style.left = left + 'vw';
-c.style.width = size + 'px';
-c.style.height = (size * 1.3) + 'px';
-c.style.animationDuration = duration + 's';
-
-const colors = ['#ff2f78','#ff7ab6','#ffd1dc','#ffcc00','#7c4dff','#00c2ff','#00ff9d'];
-c.style.background = colors[Math.floor(Math.random() * colors.length)];
-
-celebrate.appendChild(c);
-setTimeout(() => c.remove(), duration * 1000 + 200);
-}
-}
-
-// ===================== Paradiesvögel =====================
-let birdsRunning = false;
-let birdTimer = null;
-
-function spawnBird(){
-const b = document.createElement('div');
-b.className = 'bird';
-
-const options = ['🦜','🦚','🐦','🐤','🕊️'];
-b.textContent = options[Math.floor(Math.random() * options.length)];
-
-const dir = Math.random() < 0.5 ? 'LR' : 'RL';
-const y = (10 + Math.random() * 70).toFixed(2) + 'vh';
-const s = (0.55 + Math.random() * 0.95).toFixed(2);
-const r = ((Math.random()*18) - 9).toFixed(1) + 'deg';
-const dur = (4.5 + Math.random() * 4.8).toFixed(2) + 's';
-
-b.style.setProperty('--y', y);
-b.style.setProperty('--s', s);
-b.style.setProperty('--r', r);
-
-b.style.animation = (dir === 'LR' ? `flyLR ${dur} linear forwards` : `flyRL ${dur} linear forwards`);
-birdsLayer.appendChild(b);
-
-setTimeout(() => b.remove(), parseFloat(dur) * 1000 + 100);
-}
-
-function startBirds(){
-if (birdsRunning) return;
-birdsRunning = true;
-
-for(let i=0;i<5;i++) setTimeout(spawnBird, i*250);
-
-birdTimer = setInterval(() => {
-spawnBird();
-if (Math.random() < 0.35) setTimeout(spawnBird, 180);
-if (Math.random() < 0.18) setTimeout(spawnBird, 360);
-}, 650);
-}
-
-// ===================== Feuerwerk (Canvas) =====================
-const fwCanvas = document.getElementById('fireworks');
-const fwCtx = fwCanvas.getContext('2d');
-
-let fwRunning = false;
-let rockets = [];
-let sparks = [];
-let fwLast = 0;
-let fwRAF = null;
-
-function rand(min,max){ return Math.random()*(max-min)+min; }
-
-function resizeFireworks(){
-const rect = celebrate.getBoundingClientRect();
-fwCanvas.width = Math.floor(rect.width * devicePixelRatio);
-fwCanvas.height = Math.floor(rect.height * devicePixelRatio);
-fwCanvas.style.width = rect.width + 'px';
-fwCanvas.style.height = rect.height + 'px';
-fwCtx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
-}
-
-window.addEventListener('resize', () => {
-if (fwRunning) resizeFireworks();
-});
-
-function launchRocket(){
-rockets.push({
-x: rand(0.12, 0.88) * fwCanvas.clientWidth,
-y: fwCanvas.clientHeight + 12,
-vx: rand(-0.7, 0.7),
-vy: rand(-10.2, -13.2),
-hue: rand(0,360),
-life: rand(55, 85)
-});
-}
-
-function explode(x,y,hue){
-const count = Math.floor(rand(70, 125));
-for(let i=0;i<count;i++){
-const a = Math.random()*Math.PI*2;
-const sp = rand(1.5, 6.2);
-sparks.push({
-x,y,
-vx: Math.cos(a)*sp,
-vy: Math.sin(a)*sp,
-g: 0.06,
-drag: 0.985,
-alpha: 1,
-decay: rand(0.008, 0.018),
-hue: hue + rand(-18,18)
-});
-}
-}
-
-function stepFireworks(ts){
-if(!fwRunning) return;
-
-const dt = Math.min(32, (ts - fwLast) || 16);
-fwLast = ts;
-
-fwCtx.fillStyle = 'rgba(0,0,0,0.22)';
-fwCtx.fillRect(0,0,fwCanvas.clientWidth, fwCanvas.clientHeight);
-
-if (Math.random() < 0.10) launchRocket();
-if (Math.random() < 0.06) launchRocket();
-
-for(let i=rockets.length-1;i>=0;i--){
-const r = rockets[i];
-r.x += r.vx * (dt/16);
-r.y += r.vy * (dt/16);
-r.vy += 0.09 * (dt/16);
-r.life -= (dt/16);
-
-fwCtx.beginPath();
-fwCtx.fillStyle = `hsla(${r.hue}, 100%, 70%, 0.95)`;
-fwCtx.arc(r.x, r.y, 2.3, 0, Math.PI*2);
-fwCtx.fill();
-
-if (r.life <= 0 || r.vy > -1.2){
-explode(r.x, r.y, r.hue);
-rockets.splice(i,1);
-}
-}
-
-for(let i=sparks.length-1;i>=0;i--){
-const s = sparks[i];
-s.vx *= s.drag;
-s.vy *= s.drag;
-s.vy += s.g * (dt/16);
-s.x += s.vx * (dt/16);
-s.y += s.vy * (dt/16);
-s.alpha -= s.decay * (dt/16);
-
-fwCtx.beginPath();
-fwCtx.strokeStyle = `hsla(${s.hue}, 100%, 70%, ${Math.max(0,s.alpha)})`;
-fwCtx.lineWidth = 2;
-fwCtx.moveTo(s.x, s.y);
-fwCtx.lineTo(s.x - s.vx*1.6, s.y - s.vy*1.6);
-fwCtx.stroke();
-
-if (s.alpha <= 0) sparks.splice(i,1);
-}
-
-fwRAF = requestAnimationFrame(stepFireworks);
-}
-
-function startFireworks(){
-if (fwRunning) return;
-fwRunning = true;
-
-resizeFireworks();
-rockets = [];
-sparks = [];
-fwLast = 0;
-
-for(let i=0;i<5;i++) setTimeout(launchRocket, i*180);
-
-fwCtx.clearRect(0,0,fwCanvas.clientWidth, fwCanvas.clientHeight);
-fwRAF = requestAnimationFrame(stepFireworks);
-}
-
-// ===================== Events =====================
-noBtn.addEventListener('click', () => {
-noCount += 1;
-
-yesScale = Math.min(3.2, 1 + noCount * 0.18);
-updateYesSize();
-updateMood();
-
-if (noCount >= 3) buildRain();
-
-// bei genau 3: Donner + Regen starten
-if (noCount === 3){
-sounds.thunder.currentTime = 0;
-safePlay(sounds.thunder);
-safePlay(sounds.rain);
-}
-
-const texts = [
-"Ich bin eine richtige BITCH",
-"sag vallah",
-"trau dich noch einmal nh....",
-"DU HAST NICHT MEHR ALLE TASSEN IM SCHRANK!",
-"U GETTING TOUCHED",
-"💀☠️⚰️🪦⚱️"
-];
-noBtn.textContent = texts[Math.min(noCount, texts.length - 1)];
-});
-
-yesBtn.addEventListener('click', () => {
-celebrate.style.display = 'grid';
-
-// Visuals
-launchConfetti(240);
-startFireworks();
-startBirds();
-
-// Sounds: Regen aus, Party an
-safePause(sounds.rain);
-
-sounds.fireworks.currentTime = 0;
-safePlay(sounds.fireworks);
-
-sounds.applause.currentTime = 0;
-safePlay(sounds.applause);
-
-setTimeout(() => {
-sounds.yay.currentTime = 0;
-safePlay(sounds.yay);
-}, 300);
-});
-
-// Initial
-updateYesSize();
-updateMood();
-</script>
+  <div class="card" id="main">
+    <h1>💘 Do u wanna be my Valentineee beeeebbiiiii 😎🦀🦜🐣🐣🐣👁️👁️</h1>
+    <p>(Die Antwort ist gaaaaaanz einfach bubu 😎😄)</p>
+
+    <div class="buttons">
+      <div class="yesWrap" id="yesWrap">
+        <button id="yesBtn">YES 😎🐒💘</button>
+
+        <div class="arrows" id="arrows">
+          <div class="arrow a1"><span>➤</span></div>
+          <div class="arrow a2"><span>➤</span></div>
+          <div class="arrow a3"><span>➤</span></div>
+          <div class="arrow a4"><span>➤</span></div>
+          <div class="arrow a5"><span>➤</span></div>
+          <div class="arrow a6"><span>➤</span></div>
+        </div>
+      </div>
+
+      <button id="noBtn">ich bin eine bitch 😠👿🆘</button>
+    </div>
+  </div>
+
+  <!-- Gewitter -->
+  <div id="storm">
+    <div id="lightning"></div>
+  </div>
+
+  <!-- Impact -->
+  <div id="impact">
+    <div id="impactFlash"></div>
+    <div id="rocket">🚀</div>
+    <div id="blast"></div>
+  </div>
+
+  <!-- Celebrate -->
+  <div id="celebrate">
+    <canvas id="fireworks"></canvas>
+    <div id="birds"></div>
+
+    <div class="celebrate-card">
+      <p class="big">MUHEHEHEHE BEBBBBBEBEBEBI 😎🦜🐣💘</p>
+      <p class="sub">ICH FREUE MICH AUF BERLIN MIT MEINEM BEBI 💘</p>
+      <p class="sub" style="opacity:.85;margin-top:10px;">(MEINE KLEINE BEBIMAUS 🐱🐶)</p>
+    </div>
+  </div>
+
+  <script>
+    const yesWrap = document.getElementById('yesWrap');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const celebrate = document.getElementById('celebrate');
+    const arrows = document.getElementById('arrows');
+    const storm = document.getElementById('storm');
+    const birdsLayer = document.getElementById('birds');
+
+    const impact = document.getElementById('impact');
+    const impactFlash = document.getElementById('impactFlash');
+    const rocket = document.getElementById('rocket');
+    const blast = document.getElementById('blast');
+
+    let noCount = 0;
+    let yesScale = 1;
+    let impactDone = false;
+
+    // ===================== SOUNDS =====================
+    const sounds = {
+      applause: new Audio('sounds/applause.mp3'),
+      yay: new Audio('sounds/yay.mp3'),
+      fireworks: new Audio('sounds/fireworks.mp3'),
+      rain: new Audio('sounds/rain.mp3'),
+      thunder: new Audio('sounds/thunder.mp3'),
+      impact: new Audio('sounds/impact.mp3')
+    };
+
+    sounds.applause.volume = 0.65;
+    sounds.yay.volume = 0.85;
+    sounds.fireworks.volume = 0.35;
+    sounds.rain.volume = 0.25;
+    sounds.thunder.volume = 0.55;
+    sounds.impact.volume = 0.75;
+    sounds.rain.loop = true;
+
+    function safePlay(a){ try{ a.play().catch(()=>{}); }catch(e){} }
+    function safePause(a){ try{ a.pause(); }catch(e){} }
+
+    // ===================== Mood (nur Hintergrund dunkler) =====================
+    function lerp(a, b, t){ return a + (b - a) * t; }
+    function mixColor(c1, c2, t){
+      const r = Math.round(lerp(c1[0], c2[0], t));
+      const g = Math.round(lerp(c1[1], c2[1], t));
+      const b = Math.round(lerp(c1[2], c2[2], t));
+      return `rgb(${r},${g},${b})`;
+    }
+
+    function updateMood(){
+      const t = Math.min(1, noCount / 8);
+      const bg1 = mixColor([255, 227, 236], [60, 10, 80], t);
+      const bg2 = mixColor([255, 240, 246], [5, 0, 12], t);
+
+      document.documentElement.style.setProperty('--bg1', bg1);
+      document.documentElement.style.setProperty('--bg2', bg2);
+
+      if (noCount >= 3) storm.classList.add('show');
+      else storm.classList.remove('show');
+
+      const arrowEls = arrows.querySelectorAll('.arrow');
+      if (noCount >= 3) {
+        arrows.classList.add('show');
+        arrowEls.forEach((el, idx) => {
+          el.style.display = (idx < Math.min(2 + noCount, arrowEls.length)) ? 'block' : 'none';
+        });
+      } else {
+        arrows.classList.remove('show');
+        arrowEls.forEach(el => el.style.display = 'none');
+      }
+    }
+
+    // ===================== YES wächst =====================
+    function updateYesSize(){
+      yesBtn.style.transform = `scale(${yesScale})`;
+      yesBtn.style.filter = `saturate(${1 + noCount * 0.15})`;
+    }
+
+    // ===================== Regen erzeugen (einmalig) =====================
+    function buildRain(){
+      if (storm.dataset.rainBuilt) return;
+      storm.dataset.rainBuilt = "1";
+
+      for(let i=0; i<95; i++){
+        const d = document.createElement('div');
+        d.className = 'rainDrop';
+        d.style.left = (Math.random() * 100) + 'vw';
+        d.style.opacity = (0.22 + Math.random() * 0.55);
+        const dur = 0.55 + Math.random() * 0.95;
+        d.style.animationDuration = dur + 's';
+        d.style.animationDelay = (Math.random() * 1.2) + 's';
+        storm.appendChild(d);
+      }
+    }
+
+    // ===================== Konfetti =====================
+    function launchConfetti(n = 180){
+      for (let i = 0; i < n; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+
+        const left = Math.random() * 100;
+        const size = 6 + Math.random() * 10;
+        const duration = 2.2 + Math.random() * 2.8;
+
+        c.style.left = left + 'vw';
+        c.style.width = size + 'px';
+        c.style.height = (size * 1.3) + 'px';
+        c.style.animationDuration = duration + 's';
+
+        const colors = ['#ff2f78','#ff7ab6','#ffd1dc','#ffcc00','#7c4dff','#00c2ff','#00ff9d'];
+        c.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+        celebrate.appendChild(c);
+        setTimeout(() => c.remove(), duration * 1000 + 200);
+      }
+    }
+
+    // ===================== Paradiesvögel =====================
+    let birdTimer = null;
+    function spawnBird(){
+      const b = document.createElement('div');
+      b.className = 'bird';
+      const options = ['🦜','🦚','🐦','🐤','🕊️'];
+      b.textContent = options[Math.floor(Math.random() * options.length)];
+
+      const dir = Math.random() < 0.5 ? 'LR' : 'RL';
+      const y = (10 + Math.random() * 70).toFixed(2) + 'vh';
+      const s = (0.55 + Math.random() * 0.95).toFixed(2);
+      const r = ((Math.random()*18) - 9).toFixed(1) + 'deg';
+      const dur = (4.5 + Math.random() * 4.8).toFixed(2) + 's';
+
+      b.style.setProperty('--y', y);
+      b.style.setProperty('--s', s);
+      b.style.setProperty('--r', r);
+      b.style.animation = (dir === 'LR' ? `flyLR ${dur} linear forwards` : `flyRL ${dur} linear forwards`);
+      birdsLayer.appendChild(b);
+      setTimeout(() => b.remove(), parseFloat(dur) * 1000 + 100);
+    }
+    function startBirds(){
+      if (birdTimer) return;
+      for(let i=0;i<5;i++) setTimeout(spawnBird, i*250);
+      birdTimer = setInterval(() => {
+        spawnBird();
+        if (Math.random() < 0.35) setTimeout(spawnBird, 180);
+        if (Math.random() < 0.18) setTimeout(spawnBird, 360);
+      }, 650);
+    }
+
+    // ===================== Feuerwerk (Canvas) =====================
+    const fwCanvas = document.getElementById('fireworks');
+    const fwCtx = fwCanvas.getContext('2d');
+
+    let fwRunning = false;
+    let rockets = [];
+    let sparks = [];
+    let fwLast = 0;
+    let fwRAF = null;
+
+    function rand(min,max){ return Math.random()*(max-min)+min; }
+
+    function resizeFireworks(){
+      const rect = celebrate.getBoundingClientRect();
+      fwCanvas.width  = Math.floor(rect.width  * devicePixelRatio);
+      fwCanvas.height = Math.floor(rect.height * devicePixelRatio);
+      fwCanvas.style.width  = rect.width + 'px';
+      fwCanvas.style.height = rect.height + 'px';
+      fwCtx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+    }
+
+    window.addEventListener('resize', () => { if (fwRunning) resizeFireworks(); });
+
+    function launchRocketFW(){
+      rockets.push({
+        x: rand(0.12, 0.88) * fwCanvas.clientWidth,
+        y: fwCanvas.clientHeight + 12,
+        vx: rand(-0.7, 0.7),
+        vy: rand(-10.2, -13.2),
+        hue: rand(0,360),
+        life: rand(55, 85)
+      });
+    }
+
+    function explodeFW(x,y,hue){
+      const count = Math.floor(rand(70, 125));
+      for(let i=0;i<count;i++){
+        const a = Math.random()*Math.PI*2;
+        const sp = rand(1.5, 6.2);
+        sparks.push({
+          x,y,
+          vx: Math.cos(a)*sp,
+          vy: Math.sin(a)*sp,
+          g: 0.06,
+          drag: 0.985,
+          alpha: 1,
+          decay: rand(0.008, 0.018),
+          hue: hue + rand(-18,18)
+        });
+      }
+    }
+
+    function stepFireworks(ts){
+      if(!fwRunning) return;
+      const dt = Math.min(32, (ts - fwLast) || 16);
+      fwLast = ts;
+
+      fwCtx.fillStyle = 'rgba(0,0,0,0.22)';
+      fwCtx.fillRect(0,0,fwCanvas.clientWidth, fwCanvas.clientHeight);
+
+      if (Math.random() < 0.10) launchRocketFW();
+      if (Math.random() < 0.06) launchRocketFW();
+
+      for(let i=rockets.length-1;i>=0;i--){
+        const r = rockets[i];
+        r.x += r.vx * (dt/16);
+        r.y += r.vy * (dt/16);
+        r.vy += 0.09 * (dt/16);
+        r.life -= (dt/16);
+
+        fwCtx.beginPath();
+        fwCtx.fillStyle = `hsla(${r.hue}, 100%, 70%, 0.95)`;
+        fwCtx.arc(r.x, r.y, 2.3, 0, Math.PI*2);
+        fwCtx.fill();
+
+        if (r.life <= 0 || r.vy > -1.2){
+          explodeFW(r.x, r.y, r.hue);
+          rockets.splice(i,1);
+        }
+      }
+
+      for(let i=sparks.length-1;i>=0;i--){
+        const s = sparks[i];
+        s.vx *= s.drag;
+        s.vy *= s.drag;
+        s.vy += s.g * (dt/16);
+        s.x += s.vx * (dt/16);
+        s.y += s.vy * (dt/16);
+        s.alpha -= s.decay * (dt/16);
+
+        fwCtx.beginPath();
+        fwCtx.strokeStyle = `hsla(${s.hue}, 100%, 70%, ${Math.max(0,s.alpha)})`;
+        fwCtx.lineWidth = 2;
+        fwCtx.moveTo(s.x, s.y);
+        fwCtx.lineTo(s.x - s.vx*1.6, s.y - s.vy*1.6);
+        fwCtx.stroke();
+
+        if (s.alpha <= 0) sparks.splice(i,1);
+      }
+
+      fwRAF = requestAnimationFrame(stepFireworks);
+    }
+
+    function startFireworks(){
+      if (fwRunning) return;
+      fwRunning = true;
+      resizeFireworks();
+      rockets = [];
+      sparks = [];
+      fwLast = 0;
+      for(let i=0;i<5;i++) setTimeout(launchRocketFW, i*180);
+      fwCtx.clearRect(0,0,fwCanvas.clientWidth, fwCanvas.clientHeight);
+      fwRAF = requestAnimationFrame(stepFireworks);
+    }
+
+    // ===================== Impact Animation (letztes NEIN) =====================
+    function playImpact(){
+      if (impactDone) return;
+      impactDone = true;
+
+      impact.classList.add('show');
+
+      rocket.style.animation = 'rocketIn 0.85s cubic-bezier(.2,.8,.2,1) forwards';
+      blast.style.animation = 'blastRing 1.05s ease-out forwards';
+      impactFlash.style.animation = 'flash 1.05s ease-out forwards';
+
+      document.body.classList.add('shake');
+      setTimeout(() => document.body.classList.remove('shake'), 600);
+
+      sounds.impact.currentTime = 0;
+      safePlay(sounds.impact);
+
+      // Nach Impact: YES GLOW + Herzschlag-Puls
+      yesWrap.classList.add('pulse');
+
+      setTimeout(() => {
+        impact.classList.remove('show');
+      }, 1200);
+    }
+
+    // ===================== Events =====================
+    noBtn.addEventListener('click', () => {
+      const texts = [
+        "Ich bin eine richtige BITCH",
+        "sag vallah",
+        "trau dich noch einmal nh....",
+        "DU HAST NICHT MEHR ALLE TASSEN IM SCHRANK!",
+        "U GETTING TOUCHED",
+        "💀☠️⚰️🪦⚱️"
+      ];
+
+      noCount += 1;
+
+      yesScale = Math.min(3.2, 1 + noCount * 0.18);
+      updateYesSize();
+      updateMood();
+
+      if (noCount >= 3) buildRain();
+
+      if (noCount === 3){
+        sounds.thunder.currentTime = 0;
+        safePlay(sounds.thunder);
+        safePlay(sounds.rain);
+      }
+
+      noBtn.textContent = texts[Math.min(noCount, texts.length - 1)];
+
+      const isLastNo = noCount >= (texts.length - 1);
+      if (isLastNo){
+        playImpact();
+      }
+    });
+
+    yesBtn.addEventListener('click', () => {
+      celebrate.style.display = 'grid';
+
+      launchConfetti(240);
+      startFireworks();
+      startBirds();
+
+      safePause(sounds.rain);
+
+      sounds.fireworks.currentTime = 0;
+      safePlay(sounds.fireworks);
+
+      sounds.applause.currentTime = 0;
+      safePlay(sounds.applause);
+
+      setTimeout(() => {
+        sounds.yay.currentTime = 0;
+        safePlay(sounds.yay);
+      }, 300);
+    });
+
+    // Initial
+    updateYesSize();
+    updateMood();
+  </script>
 </body>
 </html>
