@@ -4,111 +4,223 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>💘</title>
+
   <style>
-    :root { --bg: #fff0f6; --text: #2b2b2b; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(circle at top, #ffe3ec, var(--bg));
-      color: var(--text);
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
+    :root{
+      --bg1:#ffe3ec;   /* helles pink */
+      --bg2:#fff0f6;   /* helles pink 2 */
+      --text:#2b2b2b;
+      --card: rgba(255,255,255,0.75);
+      --border: rgba(255, 105, 180, 0.25);
+      --shadow: rgba(255, 20, 147, 0.15);
     }
-    .card {
-      background: rgba(255,255,255,0.75);
+
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+      color: var(--text);
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      transition: background 0.35s ease, color 0.35s ease;
+    }
+
+    .card{
+      background: var(--card);
       backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 105, 180, 0.25);
+      border: 1px solid var(--border);
       border-radius: 18px;
       padding: 28px 22px;
       width: min(520px, 92vw);
       text-align: center;
-      box-shadow: 0 12px 40px rgba(255, 20, 147, 0.15);
+      box-shadow: 0 12px 40px var(--shadow);
+      transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+      position: relative;
+      z-index: 5;
     }
+
     h1 { margin: 0 0 10px; font-size: clamp(26px, 4vw, 38px); }
     p  { margin: 0 0 18px; opacity: 0.9; }
 
-    .buttons {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-top: 8px;
+    .buttons{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-top:8px;
     }
 
-    button {
-      border: none;
-      border-radius: 999px;
-      padding: 12px 18px;
-      cursor: pointer;
-      font-weight: 700;
+    button{
+      border:none;
+      border-radius:999px;
+      padding:12px 18px;
+      cursor:pointer;
+      font-weight:700;
       transition: transform 0.12s ease, filter 0.12s ease;
-      user-select: none;
+      user-select:none;
+      position: relative;
+      z-index: 3;
     }
-    button:active { transform: translateY(1px) scale(0.99); }
+    button:active{ transform: translateY(1px) scale(0.99); }
 
-    #yesBtn {
+    /* YES + Pfeile */
+    .yesWrap{
+      position: relative;
+      display: inline-block;
+    }
+
+    #yesBtn{
       background: linear-gradient(135deg, #ff4d8d, #ff7ab6);
-      color: white;
-      font-size: 18px;
+      color:white;
+      font-size:18px;
       box-shadow: 0 10px 24px rgba(255, 77, 141, 0.35);
-      transform-origin: center;
-    }
-    #noBtn {
-      background: #ffffff;
-      color: #ff2f78;
-      border: 2px solid rgba(255, 47, 120, 0.35);
-      font-size: 16px;
+      transform-origin:center;
     }
 
-    /* “Feuerwerk” / Konfetti Overlay */
-    #celebrate {
-      position: fixed;
-      inset: 0;
-      display: none;
-      place-items: center;
+    .arrows{
+      position:absolute;
+      inset:-28px;
+      pointer-events:none;
+      opacity:0;
+      transform: scale(0.98);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 4;
+    }
+    .arrows.show{ opacity:1; transform: scale(1); }
+
+    /* einzelne Pfeile */
+    .arrow{
+      position:absolute;
+      font-size: 28px;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25));
+    }
+    .arrow span{
+      display:inline-block;
+      color: #ff1a1a; /* rot */
+      font-weight: 900;
+    }
+    /* Positionen (zeigen auf den Button) */
+    .a1{ left:-10px; top:50%; transform: translateY(-50%) rotate(0deg); }
+    .a2{ right:-10px; top:50%; transform: translateY(-50%) rotate(180deg); }
+    .a3{ left:50%; top:-8px; transform: translateX(-50%) rotate(90deg); }
+    .a4{ left:50%; bottom:-8px; transform: translateX(-50%) rotate(-90deg); }
+    .a5{ left:10%; top:10%; transform: rotate(35deg); }
+    .a6{ right:10%; top:10%; transform: rotate(145deg); }
+
+    #noBtn{
+      background:#ffffff;
+      color:#ff2f78;
+      border:2px solid rgba(255, 47, 120, 0.35);
+      font-size:16px;
+    }
+
+    /* Konfetti Overlay */
+    #celebrate{
+      position:fixed;
+      inset:0;
+      display:none;
+      place-items:center;
       background: radial-gradient(circle at top, rgba(255,255,255,0.65), rgba(255, 192, 203, 0.5));
-      z-index: 50;
-      overflow: hidden;
+      z-index:50;
+      overflow:hidden;
     }
     .celebrate-card{
       background: rgba(255,255,255,0.85);
-      border-radius: 22px;
-      padding: 26px 22px;
-      text-align: center;
-      border: 1px solid rgba(255,105,180,0.25);
+      border-radius:22px;
+      padding:26px 22px;
+      text-align:center;
+      border:1px solid rgba(255,105,180,0.25);
       box-shadow: 0 18px 60px rgba(255, 20, 147, 0.2);
-      width: min(560px, 92vw);
+      width:min(560px, 92vw);
     }
     .big { font-size: clamp(34px, 5vw, 56px); margin: 0 0 8px; }
     .sub { font-size: 18px; margin: 0; }
 
-    .confetti {
-      position: absolute;
-      width: 10px; height: 14px;
-      opacity: 0.9;
-      top: -20px;
+    .confetti{
+      position:absolute;
+      width:10px; height:14px;
+      opacity:0.9;
+      top:-20px;
       animation: fall linear forwards;
-      border-radius: 3px;
+      border-radius:3px;
     }
-    @keyframes fall {
-      to { transform: translateY(110vh) rotate(720deg); }
+    @keyframes fall{ to { transform: translateY(110vh) rotate(720deg); } }
+
+    /* ============== GEWITTER OVERLAY ============== */
+    #storm{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      display:none;
+      z-index: 20;
+      overflow:hidden;
+      background: radial-gradient(circle at top, rgba(30,0,40,0.35), rgba(0,0,0,0.65));
+    }
+    #storm.show{ display:block; }
+
+    /* Regenlinien */
+    .rainDrop{
+      position:absolute;
+      top:-30px;
+      width:2px;
+      height:28px;
+      background: rgba(180, 220, 255, 0.55);
+      transform: skewX(-20deg);
+      animation: rain linear infinite;
+    }
+    @keyframes rain{
+      to { transform: translateY(115vh) skewX(-20deg); }
+    }
+
+    /* Blitz: ein großer Flash */
+    #lightning{
+      position:absolute;
+      inset:0;
+      background: rgba(255,255,255,0.0);
+      animation: lightning 4.2s infinite;
+    }
+    @keyframes lightning{
+      0%, 86%, 100% { background: rgba(255,255,255,0.0); }
+      87% { background: rgba(255,255,255,0.35); }
+      88% { background: rgba(255,255,255,0.0); }
+      90% { background: rgba(255,255,255,0.25); }
+      91% { background: rgba(255,255,255,0.0); }
     }
   </style>
 </head>
-<body>
 
+<body>
   <div class="card" id="main">
-    <h1>💘 Do u wanna be my Valentineee beeeebbiiiii   😎🦀🦜🐣🐣🐣👁️👁️</h1>
+    <h1>💘 Do u wanna be my Valentineee beeeebbiiiii 😎🦀🦜🐣🐣🐣👁️👁️</h1>
     <p>(Die Antwort ist gaaaaaanz einfach bubu 😎😄)</p>
 
     <div class="buttons">
-      <button id="yesBtn">YES 😎🐒💘</button>
+      <div class="yesWrap">
+        <button id="yesBtn">YES 😎🐒💘</button>
+
+        <!-- Rote Pfeile (werden später eingeblendet) -->
+        <div class="arrows" id="arrows">
+          <div class="arrow a1"><span>➤</span></div>
+          <div class="arrow a2"><span>➤</span></div>
+          <div class="arrow a3"><span>➤</span></div>
+          <div class="arrow a4"><span>➤</span></div>
+          <div class="arrow a5"><span>➤</span></div>
+          <div class="arrow a6"><span>➤</span></div>
+        </div>
+      </div>
+
       <button id="noBtn">ich bin eine bitch 😠👿🆘</button>
     </div>
   </div>
 
+  <!-- Gewitter -->
+  <div id="storm">
+    <div id="lightning"></div>
+  </div>
+
+  <!-- Konfetti -->
   <div id="celebrate">
     <div class="celebrate-card">
       <p class="big">MUHEHEHEHE BEBBBBBEBEBEBI 😎🦜🐣💘</p>
@@ -121,23 +233,99 @@
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
     const celebrate = document.getElementById('celebrate');
+    const arrows = document.getElementById('arrows');
+    const storm = document.getElementById('storm');
 
     let noCount = 0;
     let yesScale = 1;
 
+    // ----- Mood/Theme: wird immer dunkler -----
+    function lerp(a, b, t){ return a + (b - a) * t; }
+
+    // Mischung: pink -> dunkel (RGB)
+    function mixColor(c1, c2, t){
+      const r = Math.round(lerp(c1[0], c2[0], t));
+      const g = Math.round(lerp(c1[1], c2[1], t));
+      const b = Math.round(lerp(c1[2], c2[2], t));
+      return `rgb(${r},${g},${b})`;
+    }
+
+    function updateMood(){
+      // t: 0 (pink) bis 1 (sehr düster)
+      const t = Math.min(1, noCount / 8);
+
+      // Hintergrundfarben: pink -> dunkelviolett/schwarz
+      const bg1 = mixColor([255, 227, 236], [60, 10, 80], t);
+      const bg2 = mixColor([255, 240, 246], [5, 0, 12], t);
+
+      // Card: weiß -> dunkler
+      const cardAlpha = lerp(0.75, 0.12, t);
+      const borderAlpha = lerp(0.25, 0.55, t);
+      const shadowAlpha = lerp(0.15, 0.45, t);
+
+      document.documentElement.style.setProperty('--bg1', bg1);
+      document.documentElement.style.setProperty('--bg2', bg2);
+      document.documentElement.style.setProperty('--card', `rgba(20, 10, 30, ${cardAlpha})`);
+      document.documentElement.style.setProperty('--border', `rgba(180, 90, 255, ${borderAlpha})`);
+      document.documentElement.style.setProperty('--shadow', `rgba(0, 0, 0, ${shadowAlpha})`);
+
+      // Text: wird heller wenn düster
+      document.documentElement.style.setProperty('--text', t > 0.35 ? '#f6f0ff' : '#2b2b2b');
+
+      // Gewitter ab einem Punkt
+      if (noCount >= 4) storm.classList.add('show');
+      if (noCount < 4) storm.classList.remove('show');
+
+      // Pfeile ab einem Punkt (und mehr Pfeile bei mehr Neins)
+      if (noCount >= 3) {
+        arrows.classList.add('show');
+        // mehr Pfeile schrittweise
+        const arrowEls = arrows.querySelectorAll('.arrow');
+        arrowEls.forEach((el, idx) => {
+          el.style.display = (idx < Math.min(2 + noCount, arrowEls.length)) ? 'block' : 'none';
+        });
+      } else {
+        arrows.classList.remove('show');
+      }
+    }
+
+    // ----- YES wächst -----
     function updateYesSize() {
       yesBtn.style.transform = `scale(${yesScale})`;
       yesBtn.style.filter = `saturate(${1 + noCount * 0.15})`;
     }
 
+    // ----- Regen erzeugen (einmalig) -----
+    function buildRain(){
+      // schon gebaut?
+      if (storm.dataset.rainBuilt) return;
+      storm.dataset.rainBuilt = "1";
+
+      for(let i=0; i<90; i++){
+        const d = document.createElement('div');
+        d.className = 'rainDrop';
+        d.style.left = (Math.random() * 100) + 'vw';
+        d.style.opacity = (0.25 + Math.random() * 0.5);
+        const dur = 0.6 + Math.random() * 0.9;
+        d.style.animationDuration = dur + 's';
+        d.style.animationDelay = (Math.random() * 1.2) + 's';
+        storm.appendChild(d);
+      }
+    }
+
     noBtn.addEventListener('click', () => {
       noCount += 1;
 
-      // Ja-Button wächst
+      // YES-Button wächst
       yesScale = Math.min(3.2, 1 + noCount * 0.18);
       updateYesSize();
 
-      // optional: Nein-Text wird “weicher”
+      // Stimmung dunkler
+      updateMood();
+
+      // ab Gewitter: Regen bauen
+      if (noCount >= 2) buildRain();
+
       const texts = [
         "Ich bin eine richtige BITCH",
         "sag vallah",
@@ -159,7 +347,6 @@
         const c = document.createElement('div');
         c.className = 'confetti';
 
-        // zufällige Position, Größe, Dauer
         const left = Math.random() * 100;
         const size = 6 + Math.random() * 10;
         const duration = 2.5 + Math.random() * 2.5;
@@ -169,19 +356,17 @@
         c.style.height = (size * 1.3) + 'px';
         c.style.animationDuration = duration + 's';
 
-        // hübsche Farben
         const colors = ['#ff2f78','#ff7ab6','#ffd1dc','#ffcc00','#7c4dff','#00c2ff'];
         c.style.background = colors[Math.floor(Math.random() * colors.length)];
 
         celebrate.appendChild(c);
-
-        // aufräumen
         setTimeout(() => c.remove(), duration * 1000 + 200);
       }
     }
 
     // Initial
     updateYesSize();
+    updateMood();
   </script>
 </body>
 </html>
